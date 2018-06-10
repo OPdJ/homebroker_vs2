@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-bar-chart-o fa-fw"></i> @ViewBag.Heading
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Ativo</th>
+                                    <th>Preço</th>
+                                    <th>%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>3326</td>
+                                    <td>10/21/2013</td>
+                                    <td>3:29 PM</td>
+                                    <td>$321.33</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.col-lg-4 (nested) -->
+                <div class="col-lg-6">
+                    <canvas id="chart1"></canvas>
+                </div>
+                <!-- /.col-lg-12 (nested) -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+<!-- /.col-lg-8 -->
+
+@section Script{
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/Chart.js"></script>
+    <script src="~/Scripts/Chart.Financial.js"></script>
+    <script src="~/Scripts/utils.js"></script>
+    <script>
+        var data = getRandomData('April 01 2017', 10);
+        // Candlestick
+        var ctx = document.getElementById("chart1").getContext("2d");
+        ctx.canvas.width = 500;
+        ctx.canvas.height = 250;
+        new Chart(ctx, {
+            type: 'candlestick',
+            data: {
+                datasets: [{
+                    label: "CHRT - Chart.js Corporation",
+                    data: data,
+                    fractionalDigitsCount: 2,
+                }]
+            },
+            options: {
+                tooltips: {
+                    position: 'nearest',
+                    mode: 'index',
+                },
+            },
+        });
+    </script>
+}
+

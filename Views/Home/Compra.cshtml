@@ -1,0 +1,85 @@
+﻿@model BolsaValor.Models.Ordem
+
+@{
+    ViewBag.Title = "Compra";
+}
+
+@using (Html.BeginForm()) 
+{    
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.IDOrdem, new { htmlAttributes = new { @class = "form-control" } })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IDAtivo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.IDAtivo, ViewBag.IDAtivo as SelectList, "Selecione Ativo", new { @class = "form-control", @style = "width: 190px;" })
+            @Html.ValidationMessageFor(model => model.IDAtivo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DataOrdem, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DataOrdem, new { htmlAttributes = new { @class = "form-control", @type = "date", @style = "width:160px;" } })
+            @Html.ValidationMessageFor(model => model.DataOrdem, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Preco, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Preco, new { htmlAttributes = new { @class = "form-control", @style = "width:110px;" } })
+            @Html.ValidationMessageFor(model => model.Preco, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("", "Preço Atual", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBox("PrecoAtual", null, new { @class = "form-control", @style = "width:110px;", @readonly = "readonly" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.QtdVendida, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.QtdVendida, new { htmlAttributes = new { @class = "form-control", @style = "width:140px;" } })
+            @Html.ValidationMessageFor(model => model.QtdVendida, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.QtdCadastrada, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.QtdCadastrada, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @style = "width:140px;" } })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Script{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(document).on("change", '#IDAtivo', function () {
+                $.post("GetAtivoCompra", { IDAtivo: $(this).val() }, function (data) {
+                    $("#PrecoAtual").val(data.Valor);
+                    $("#QtdCadastrada").val(data.Quantidade);
+                });
+            });
+        });
+    </script>
+}

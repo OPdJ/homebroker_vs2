@@ -1,0 +1,58 @@
+﻿@model IEnumerable<BolsaValor.Models.OrdemXAtivoModel>
+
+@{
+    ViewBag.Title = "Historico";
+}
+
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-bar-chart-o fa-fw"></i> @ViewBag.Heading
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Descrição</th>
+                                    <th>Preço</th>
+                                    <th>Qtd. Comprada/Vendida</th>
+                                    <th>Compra/Venda</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Any())
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.Ordem.DataOrdem</td>
+                                            <td>@item.Ativo.Descricao</td>
+                                            <td>@item.Ordem.Preco</td>
+                                            <td>@item.Ordem.QtdVendida</td>
+                                            <td>@item.Ordem.TipoOrdem</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr><td colspan="5">No Data</td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.col-lg-12 (nested) -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+<!-- /.col-lg-12 -->
